@@ -8,6 +8,11 @@ import UserRepository from './repositories/UserRepository';
 import UserRouter from './routes/UserRoutes';
 import UserService from './services/UserService';
 
+import ProductController from './controllers/ProductController';
+import ProductRepository from './repositories/ProductRepository';
+import ProductRouter from './routes/ProductRoutes';
+import ProductService from './services/ProductService';
+
 import Container from './utils/container';
 
 export default class App {
@@ -30,6 +35,7 @@ export default class App {
 
   public initControllers() {
     this.app.use('/users', UserRouter());
+    this.app.use('/products', ProductRouter());
   }
 
   public async initContainer() {
@@ -39,6 +45,10 @@ export default class App {
     container.register('UserRepository', UserRepository, ['db']);
     container.register('UserService', UserService, ['UserRepository']);
     container.register('UserController', UserController, ['UserService']);
+
+    container.register('ProductRepository', ProductRepository, ['db']);
+    container.register('ProductService', ProductService, ['ProductRepository']);
+    container.register('ProductController', ProductController, ['ProductService']);
   }
 
   public listen(port: string) {
