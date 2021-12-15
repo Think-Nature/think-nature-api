@@ -13,6 +13,11 @@ import ProductRepository from './repositories/ProductRepository';
 import ProductRouter from './routes/ProductRoutes';
 import ProductService from './services/ProductService';
 
+import OrderController from './controllers/OrderController';
+import OrderRepository from './repositories/OrderRepository';
+import OrderRouter from './routes/OrderRoutes';
+import OrderService from './services/OrderService';
+
 import Container from './utils/container';
 
 export default class App {
@@ -36,6 +41,7 @@ export default class App {
   public initControllers() {
     this.app.use('/users', UserRouter());
     this.app.use('/products', ProductRouter());
+    this.app.use('/orders', OrderRouter());
   }
 
   public async initContainer() {
@@ -49,6 +55,10 @@ export default class App {
     container.register('ProductRepository', ProductRepository, ['db']);
     container.register('ProductService', ProductService, ['ProductRepository']);
     container.register('ProductController', ProductController, ['ProductService']);
+
+    container.register('OrderRepository', OrderRepository, ['db']);
+    container.register('OrderService', OrderService, ['OrderRepository']);
+    container.register('OrderController', OrderController, ['OrderService']);
   }
 
   public listen(port: string) {
