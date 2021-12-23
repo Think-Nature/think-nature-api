@@ -12,6 +12,12 @@ export default class ProductService {
     return this.ProductRepository.getAll();
   }
 
+  async getProductsByIds(productIds: number[], showCost = false) {
+    return showCost
+      ? this.ProductRepository.getScopeWithFilters({ id: productIds }, 'withCost')
+      : this.ProductRepository.getWithFilters({ id: productIds });
+  }
+
   async getOneProductById(id: number, showCost = false) {
     return showCost
       ? this.ProductRepository.getScopeWithFilters({ id }, 'withCost')

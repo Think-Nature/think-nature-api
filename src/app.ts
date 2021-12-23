@@ -18,6 +18,9 @@ import OrderRepository from './repositories/OrderRepository';
 import OrderRouter from './routes/OrderRoutes';
 import OrderService from './services/OrderService';
 
+import OrderDetailService from './services/OrderDetailService';
+import OrderDetailRepository from './repositories/OrderDetailRepository';
+
 import Container from './utils/container';
 
 export default class App {
@@ -58,7 +61,15 @@ export default class App {
 
     container.register('OrderRepository', OrderRepository, ['db']);
     container.register('OrderService', OrderService, ['OrderRepository']);
-    container.register('OrderController', OrderController, ['OrderService']);
+    container.register('OrderController', OrderController, [
+      'OrderService',
+      'UserService',
+      'OrderDetailService',
+      'ProductService',
+    ]);
+
+    container.register('OrderDetailRepository', OrderDetailRepository, ['db']);
+    container.register('OrderDetailService', OrderDetailService, ['OrderDetailRepository']);
   }
 
   public listen(port: string) {

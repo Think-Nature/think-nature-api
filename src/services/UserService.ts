@@ -1,4 +1,5 @@
 import { UserAttributes, UserCreationAttributes } from '../models/User';
+import { transactionOptions } from '../repositories/BaseRepository';
 import UserRepository from '../repositories/UserRepository';
 
 export default class UserService {
@@ -24,8 +25,8 @@ export default class UserService {
       : this.userRepository.getWithFilters({ email });
   }
 
-  async createUser(user: UserCreationAttributes) {
-    return this.userRepository.bulkCreate([user]);
+  async createUser(user: UserCreationAttributes, options?: transactionOptions) {
+    return this.userRepository.bulkCreate([user], options);
   }
 
   async updateOneUserById(id: number, attrs: UserAttributes) {

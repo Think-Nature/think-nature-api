@@ -1,5 +1,4 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize';
-
 type OrderStatus = 'received' | 'paid' | 'delivered';
 
 // These are all the attributes in the User model

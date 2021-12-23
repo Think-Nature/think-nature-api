@@ -1,4 +1,5 @@
 import { OrderDetailAttributes, OrderDetailCreationAttributes } from '../models/OrderDetail';
+import { transactionOptions } from '../repositories/BaseRepository';
 import OrderDetailRepository from '../repositories/OrderDetailRepository';
 
 export default class OrderDetailService {
@@ -16,8 +17,16 @@ export default class OrderDetailService {
     return this.OrderDetailRepository.getWithFilters({ id });
   }
 
-  async createOrderDetail(OrderDetail: OrderDetailCreationAttributes) {
-    return this.OrderDetailRepository.bulkCreate([OrderDetail]);
+  async getOrderDetails(orderId: number) {
+    return this.OrderDetailRepository.getWithFilters({ orderId });
+  }
+
+  async createOrderDetail(OrderDetail: OrderDetailCreationAttributes, options?: transactionOptions) {
+    return this.OrderDetailRepository.bulkCreate([OrderDetail], options);
+  }
+
+  async createOrderDetails(OrderDetails: OrderDetailCreationAttributes[], options?: transactionOptions) {
+    return this.OrderDetailRepository.bulkCreate([...OrderDetails], options);
   }
 
   async updateOneOrderDetailById(id: number, attrs: OrderDetailAttributes) {

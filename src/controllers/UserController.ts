@@ -31,8 +31,9 @@ export default class UserController {
       res.status(201);
       res.json(user);
     } catch (e) {
+      const { message } = e as Error;
       res.status(400);
-      res.json(e);
+      res.json({ message: message });
     }
   }
 

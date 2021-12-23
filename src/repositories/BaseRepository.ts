@@ -1,8 +1,13 @@
+import { Transaction } from 'sequelize/types';
 import { ModelStatic, ModelAttributes } from '../types';
 
 interface Filter {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
+}
+
+export interface transactionOptions {
+  transaction: Transaction;
 }
 
 export default class BaseRepository {
@@ -28,12 +33,12 @@ export default class BaseRepository {
     return this.model.scope(scope).findAll({ where: filter });
   }
 
-  async bulkCreate(data: ModelAttributes[]) {
-    return this.model.bulkCreate(data);
+  async bulkCreate(data: ModelAttributes[], options?: transactionOptions) {
+    return this.model.bulkCreate([...data], { ...options });
   }
 
-  async createOne(data: ModelAttributes) {
-    return this.model.create(data);
+  async createOne(data: ModelAttributes, options?: transactionOptions) {
+    return this.model.create({ ...data }, { ...options });
   }
 
   async updateWithFilters(newValue: ModelAttributes, filter: Filter) {
