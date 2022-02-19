@@ -1,4 +1,5 @@
 import { OrderAttributes, OrderCreationAttributes } from '../models/Order';
+import { TransactionOptions } from '../repositories/BaseRepository';
 import OrderRepository from '../repositories/OrderRepository';
 
 export default class OrderService {
@@ -16,8 +17,8 @@ export default class OrderService {
     return this.OrderRepository.getWithFilters({ id });
   }
 
-  async createOrder(Order: OrderCreationAttributes) {
-    return this.OrderRepository.bulkCreate([Order]);
+  async createOrder(Order: OrderCreationAttributes, options: TransactionOptions) {
+    return this.OrderRepository.createOne(Order, { ...options });
   }
 
   async updateOneOrderById(id: number, attrs: OrderAttributes) {
