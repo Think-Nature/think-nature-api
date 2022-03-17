@@ -20,4 +20,9 @@ fs.readdirSync(__dirname)
     models[model.default.name] = model.default; // we export default from our models
   });
 
+export { default as User } from './User';
+export { default as Order } from './Order';
+export { default as OrderDetail } from './OrderDetail';
+export { default as Product } from './Product';
+
 export default models;
