@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 
 import sequelize from './db';
-import models from './models';
+import models, { Order, Product, OrderDetail } from './models';
 
 import UserController from './controllers/UserController';
 import UserRepository from './repositories/UserRepository';
@@ -44,6 +44,9 @@ export default class App {
     Object.keys(models).forEach((key) => {
       models[key].initModel(Container.getInstance().get('db'));
     });
+
+    Order.hasMany(OrderDetail, { foreignKey: 'orderId', foreignKeyConstraint: true });
+    OrderDetail.belongsTo(Product, { foreignKey: 'productId', foreignKeyConstraint: true });
   }
 
   public initControllers() {

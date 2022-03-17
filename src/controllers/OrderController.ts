@@ -38,11 +38,7 @@ export default class orderController {
       const id = parseInt(req.params.id);
       const order = (await this.orderService.getOneOrderById(id))[0];
 
-      const orderDetails = (await this.orderDetailService.getOrderDetailsByOrderId(id)) as unknown as OrderDetail[];
-
-      const productDetails = await this.getProductDetails(orderDetails);
-
-      res.json({ order, products: productDetails });
+      res.json(order);
     } catch (e) {
       res.status(400);
       res.json(e);
@@ -73,6 +69,7 @@ export default class orderController {
 
         const productDetails = await this.getProductDetails(orderDetails);
 
+        // TODO: Think of solution of POST returning different data format than GET
         res.status(201);
         res.json({ order, products: productDetails });
       });
