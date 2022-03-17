@@ -11,7 +11,7 @@ export interface TransactionOptions {
 }
 
 export default class BaseRepository {
-  protected model: ModelStatic;
+  public model: ModelStatic;
 
   constructor(model: ModelStatic) {
     this.model = model;
