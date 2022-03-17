@@ -1,4 +1,4 @@
-import { Transaction } from 'sequelize/types';
+import { IncludeOptions, Transaction, WhereOptions } from 'sequelize/types';
 import { ModelStatic, ModelAttributes } from '../types';
 
 interface Filter {
@@ -17,8 +17,8 @@ export default class BaseRepository {
     this.model = model;
   }
 
-  async getAll() {
-    return this.model.findAll();
+  async getAll(include?: IncludeOptions | IncludeOptions[], where?: WhereOptions) {
+    return this.model.findAll({ include, where });
   }
 
   async getAllWithExclude(exclude: string[]) {
